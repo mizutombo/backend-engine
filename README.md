@@ -36,7 +36,9 @@ GET /assets
 ```
 - returns all available assets available for purchase
 
+```
 POST /:id/assets
+```
 - purchase asset for listed cost
 
 ### Career Options
@@ -56,7 +58,9 @@ GET /education
 ```
 - returns all available education options for purchase
 
+```
 POST /:id/education
+```
 - purchase education at listed cost
 
 ### Purchase Activities
@@ -66,7 +70,9 @@ GET /activities
 ```
 - returns all available activities available for purchase
 
+```
 POST /:id/activities
+```
 - purchase activities at listed cost
 
 ### Delete Player
