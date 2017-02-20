@@ -1,0 +1,40 @@
+{
+  "name": "backend-engine",
+  "version": "1.0.0",
+  "description": "backend-engine for dbSimsPDX game",
+  "main": "server.js",
+  "scripts": {
+    "lint": "eslint .",
+    "pretest": "npm run lint",
+    "test": "mocha --recursive",
+    "test:watch": "npm run test -- -w",
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mizutombo/backend-engine.git"
+  },
+  "author": "Tom Shultz <thomas.shultz52@gmail.com> (https://github.com/mizutombo)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mizutombo/backend-engine/issues"
+  },
+  "homepage": "https://github.com/mizutombo/backend-engine#readme",
+  
+  "engines": {
+    "node": "6.8.1"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-http": "^3.0.0",
+    "eslint": "^3.15.0",
+    "mocha": "^3.2.0"
+  },
+  "dependencies": {
+    "body-parser": "^1.16.1",
+    "express": "^4.14.1",
+    "mongoose": "^4.8.2",
+    "morgan": "^1.8.1",
+    "nodemon": "^1.11.0"
+  }
+}
