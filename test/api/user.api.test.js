@@ -61,5 +61,27 @@ describe.only('user', () => {
                     }
                 )
         );
+
+        it('signin requires username', () => 
+            badRequest('/user/signin', { password: 'password' }, 'username and password must be provided')
+        );
+
+        it('signin requires password', () => 
+            badRequest('/user/signin', { username: 'user' }, 'username and password must be provided')
+        );
+        
+        it('signin with wrong user', () => 
+            request
+                .post('/user/signin')
+                .send({ username: 'bad user', password: user.password })
+                .then(
+                    () => { throw new Error('status should not be ok');},
+                    res => {
+                        assert.equal(res.status, 401);
+                        assert.equal(res.response.body.error, 'Unauthorized')
+                    }
+                )
+        );
+
     });
 });
