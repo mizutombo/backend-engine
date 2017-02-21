@@ -1,7 +1,7 @@
 const errorHandler = require('../lib/error-handler')();
 const assert = require('chai').assert;
 
-describe.only('test error handler', () => {
+describe('test error handler', () => {
 	it('returns 500 when no code is provided', () => {
 	    const err = new Error('some server error');
 	    const res = {
