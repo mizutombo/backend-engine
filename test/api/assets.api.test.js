@@ -49,10 +49,6 @@ describe('assets REST API', () => {
         .then(() => request.get('/assets'))
         .then(res => { 
             const assets = res.body;
-            console.log('assets', assets);
-            console.log('testAsset0', testAsset0);
-            console.log('testAsset1', testAsset1);
-
             assert.deepEqual(assets, [testAsset0, testAsset1]);
         });
     });
