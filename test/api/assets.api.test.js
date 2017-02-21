@@ -9,10 +9,10 @@ const assert = chai.assert;
 chai.use(chaiHttp);
 
 // connect to mongodb
-process.env.MONGODB_URI = 'mongodb://localhost:27017/assets-REST';
+process.env.DB_URI = 'mongodb://localhost:27017/assets-REST';
 require('../../lib/connection');
 
-describe('assets REST API', () => {
+describe.only('assets REST API', () => {
 
     before(() => mongoose.connection.dropDatabase());
     const request = chai.request(app);
@@ -20,11 +20,13 @@ describe('assets REST API', () => {
     // test data
     let testAsset0 = {
         type: 'House',
-        model: 'Victorian'
+        model: 'Victorian',
+        purchase_price: 600000
     };
     let testAsset1 = {
         type: 'Vehicle',
-        model: 'Moped'
+        model: 'Moped',
+        purchase_price: 1000
     };
 
     function saveAsset (asset) {
