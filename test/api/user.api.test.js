@@ -8,7 +8,7 @@ const mongoose = require('mongoose');
 const connection = require('../../lib/connection');
 
 
-describe.only('user', () => {
+describe('user', () => {
     before(() => mongoose.connection.dropDatabase());
 
     const user = {
