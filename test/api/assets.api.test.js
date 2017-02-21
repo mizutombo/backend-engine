@@ -12,7 +12,7 @@ chai.use(chaiHttp);
 process.env.DB_URI = 'mongodb://localhost:27017/assets-REST';
 require('../../lib/connection');
 
-describe.only('assets REST API', () => {
+describe('assets REST API', () => {
 
     before(() => mongoose.connection.dropDatabase());
     const request = chai.request(app);
