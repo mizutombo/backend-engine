@@ -19,12 +19,12 @@ describe('assets REST API', () => {
 
     // test data
     let testAsset0 = {
-        type: 'House',
+        asset_type: 'House',
         model: 'Victorian',
         purchase_price: 600000
     };
     let testAsset1 = {
-        type: 'Vehicle',
+        asset_type: 'Vehicle',
         model: 'Moped',
         purchase_price: 1000
     };
@@ -49,6 +49,10 @@ describe('assets REST API', () => {
         .then(() => request.get('/assets'))
         .then(res => { 
             const assets = res.body;
+            console.log('assets', assets);
+            console.log('testAsset0', testAsset0);
+            console.log('testAsset1', testAsset1);
+
             assert.deepEqual(assets, [testAsset0, testAsset1]);
         });
     });
