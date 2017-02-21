@@ -78,7 +78,7 @@ describe.only('user', () => {
                     () => { throw new Error('status should not be ok');},
                     res => {
                         assert.equal(res.status, 401);
-                        assert.equal(res.response.body.error, 'Unauthorized')
+                        assert.equal(res.response.body.error, 'Unauthorized');
                     }
                 )
         );
