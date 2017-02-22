@@ -3,39 +3,39 @@ const assert = require('chai').assert;
 const testInvalid = require('./test-invalid')(Job);
 
 let testJob = {
-    job_type: 'Unskilled',
-    job_level: 'Mid-level',
-    monthly_salary: 1500,
-    promotion_interval: 24
+    jobType: 'Unskilled',
+    jobLevel: 'Mid-level',
+    monthlySalary: 1500,
+    promotionInterval: 24
 };
 
 describe('tests Job Model', () => {
-    it('validation fails without job_type value', () => {
+    it('validation fails without jobType value', () => {
         return testInvalid({
-            job_level: 'Mid-level',
-            monthly_salary: 1500,
-            promotion_interval: 24
+            jobLevel: 'Mid-level',
+            monthlySalary: 1500,
+            promotionInterval: 24
         });
     });
-    it('validation fails without job_level value', () => {
+    it('validation fails without jobLevel value', () => {
         return testInvalid({
-            job_type: 'Unskilled',
-            monthly_salary: 1500,
-            promotion_interval: 24
+            jobType: 'Unskilled',
+            monthlySalary: 1500,
+            promotionInterval: 24
         });
     });
-    it('validation fails without monthly_salary value', () => {
+    it('validation fails without monthlySalary value', () => {
         return testInvalid({
-            job_type: 'Unskilled',
-            job_level: 'Mid-level',
-            promotion_interval: 24
+            jobType: 'Unskilled',
+            jobLevel: 'Mid-level',
+            promotionInterval: 24
         });
     });
-    it('validation fails without promotion_interval value', () => {
+    it('validation fails without promotionInterval value', () => {
         return testInvalid({
-            job_type: 'Unskilled',
-            job_level: 'Mid-level',
-            monthly_salary: 1500
+            jobType: 'Unskilled',
+            jobLevel: 'Mid-level',
+            monthlySalary: 1500
         });
     });
     it('validation passes with all values', () => {
