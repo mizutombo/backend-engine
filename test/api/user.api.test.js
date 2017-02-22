@@ -7,7 +7,7 @@ const app = require('../../lib/app');
 const mongoose = require('mongoose');
 
 process.env.DB_URI = 'mongodb://localhost:27017/user-api-test';
-const connection = require('../../lib/connection');
+require('../../lib/connection');
 
 
 describe('user', () => {
@@ -105,15 +105,17 @@ describe('user', () => {
             return saveAsset(testAsset3)
                 .then(savedAsset3 => {
                 testAsset3._id = savedAsset3._id;
+                testAsset3.__v = savedAsset3.__v;
                 return testAsset3;
             })
             .then((testAsset3) =>
             request 
                 .post('/user/user/assets')
-                .send({ testAsset3 })
+                .send({ _id: testAsset3._id })
                 .then(res => {
-                    console.log('RESPONSE', res);
-                    assert.equal(res.assets.length, 1);
+                    console.log('RESPONSE', res.body);
+                    assert.equal(res.body.assets.length, 1);
+                    assert.deepEqual(res.body.assets[0].asset_name.model, 'Tiny Home');
                 })
             );
         });
