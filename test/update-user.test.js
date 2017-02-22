@@ -4,7 +4,7 @@ const assert = require('chai').assert;
 const User = require('../lib/models/user.model');
 const updater = require('../lib/update-user');
 
-describe.only('update-user function', () => {
+describe('update-user function', () => {
     let dummyUser = new User({
         username: 'Testy',
         hash: '$2a$08$F5f7nZtejb5o6N6kZ.XAP.kGlWCGoCnkOAgavSO/xd8LQq121wyEy',
