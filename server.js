@@ -1,6 +1,6 @@
 const http = require('http');
 const app = require('./lib/app');
-const updater = require('./routes/update-user');
+const updater = require('./lib/update-user');
 require('./lib/connection');
 
 const server = http.createServer(app);
