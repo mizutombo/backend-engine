@@ -88,18 +88,40 @@ describe('user', () => {
     
     describe('user during play', () => {
 
+        let johnDoe = {
+            username: 'johnDoe',
+            password: 'abcd'
+        };
+
         let testAsset3 = {
         asset_type: 'House',
         model: 'Tiny Home',
         purchase_price: 1000
-    };
+        };
     
+
+        const request = chai.request(app);
+
         function saveAsset (asset) {
         return request.post('/assets')
             .send(asset)
             .then(res => res.body);
         }
         
+        it('receives properties to user object on signup', () => {
+            return request
+                .post('/user/signup')
+                .send(johnDoe)
+                .then(() => {
+                    return request
+                        .get(`/user/${johnDoe.username}`);     
+                })
+                .then((res) => {
+                    console.log(res.body);
+                    assert.ok(res.body.bank_account);
+                    assert.equal(res.body.retired, false);
+                });
+        });
 
         it('can add assets to user object instance', () => {
             return saveAsset(testAsset3)
