@@ -1,0 +1,56 @@
+[
+    {
+        "jobType": "Unskilled",
+        "jobLevel": "Entry",
+        "monthlySalary": "1000",
+        "promotionInterval": "6"
+    },
+    {
+        "jobType": "Unskilled",
+        "jobLevel": "Mid-level",
+        "monthlySalary": "1500",
+        "promotionInterval": "24"
+    },
+    {
+        "jobType": "Unskilled",
+        "jobLevel": "Senior",
+        "monthlySalary": "2000",
+        "promotionInterval": "0"
+    },
+        {
+        "jobType": "Blue Collar",
+        "jobLevel": "Entry",
+        "monthlySalary": "2000",
+        "promotionInterval": "12"
+    },
+    {
+        "jobType": "Blue Collar",
+        "jobLevel": "Mid-level",
+        "monthlySalary": "3000",
+        "promotionInterval": "36"
+    },
+    {
+        "jobType": "Blue Collar",
+        "jobLevel": "Senior",
+        "monthlySalary": "4000",
+        "promotionInterval": "0"
+    },
+    {
+        "jobType": "White Collar",
+        "jobLevel": "Entry",
+        "monthlySalary": "4000",
+        "promotionInterval": "24"
+    },
+    {
+        "jobType": "White Collar",
+        "jobLevel": "Mid-level",
+        "monthlySalary": "6000",
+        "promotionInterval": "60"
+    },
+    {
+        "jobType": "White Collar",
+        "jobLevel": "Senior",
+        "monthlySalary": "8000",
+        "promotionInterval": "0"
+    }
+]
