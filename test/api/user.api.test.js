@@ -79,8 +79,8 @@ describe('user', () => {
                 .then(
                     () => { throw new Error('status should not be ok');},
                     res => {
-                        assert.equal(res.status, 401);
-                        assert.equal(res.response.body.error, 'Unauthorized');
+                        assert.equal(res.status, 400);
+                        assert.equal(res.response.body.error, 'invalid username or password');
                     }
                 )
         );
@@ -94,13 +94,6 @@ describe('user', () => {
         };
 
         let johnDoeToken = '';
-
-        let hannibal = {
-            username: 'hannibal',
-            password: 'lecter'
-        };
-
-        let hannibalToken = '';
 
         let testAsset3 = {
         asset_type: 'House',
@@ -129,20 +122,20 @@ describe('user', () => {
                         .set('Authorization', johnDoeToken);     
                 })
                 .then((res) => {
-                    console.log(res.body);
                     assert.ok(res.body.bank_account);
                     assert.equal(res.body.retired, false);
                 });
         });
 
         it('can add assets to user object instance', () => {
+            console.log('JOHNDOE', johnDoe);
             return request
-                .post ('/user/signup')
-                .send(hannibal)
+                .post ('/user/signin')
+                .send(johnDoe)
                 .then(res => {
-                    hannibalToken = res.body.token;
-                    console.log('HANNIBAL TOKEN', hannibalToken);
-                    return saveAsset(hannibalToken, testAsset3);
+                    johnDoeToken = res.body.token;
+                    console.log('RES BODY', res.body);
+                    return saveAsset(johnDoeToken, testAsset3);
                 })
                 .then(savedAsset3 => {
                 testAsset3._id = savedAsset3._id;
@@ -151,9 +144,9 @@ describe('user', () => {
             })
             .then((testAsset3) =>
             request 
-                .post('/user/hannibal/assets')
-                .send({ hannibalToken, _id: testAsset3._id })
-                .set('Authorization', hannibalToken)
+                .post('/user/johnDoe/assets')
+                .send({ johnDoeToken, _id: testAsset3._id })
+                .set('Authorization', johnDoeToken)
                 .then(res => {
                     console.log('RESPONSE', res.body);
                     assert.equal(res.body.assets.length, 1);
