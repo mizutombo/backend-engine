@@ -18,6 +18,13 @@ describe('assets REST API', () => {
     const request = chai.request(app);
 
     // test data
+    let janeDoe = {
+            username: 'janeDoe',
+            password: 'jfk'
+        };
+    
+    let janeDoeToken = '';
+
     let testAsset0 = {
         asset_type: 'House',
         model: 'Victorian',
@@ -29,28 +36,41 @@ describe('assets REST API', () => {
         purchase_price: 1000
     };
 
-    function saveAsset (asset) {
+    function saveAsset (token, asset) {
         return request.post('/assets')
             .send(asset)
+            .set('Authorization', token)
             .then(res => res.body);
     }
 
     it('returns a list of assets', () => {
-        return Promise.all([
-        // Save test assets
-            saveAsset(testAsset0),
-            saveAsset(testAsset1)
-        ])
-        .then(savedAssets => {
-            testAsset0 = savedAssets[0];
-            testAsset1 = savedAssets[1];
-        })
-        // Test to see if GET all gets all previously saved assets
-        .then(() => request.get('/assets'))
-        .then(res => { 
-            const assets = res.body;
-            assert.deepEqual(assets, [testAsset0, testAsset1]);
-        });
+    
+        return request
+            .post('/user/signup')
+            .send(janeDoe)
+            .then((res) => {
+                console.log('JANE', res.body);
+                janeDoeToken = res.body.token;
+                return Promise.all([
+                // Save test assets
+                    saveAsset(janeDoeToken, testAsset0),
+                    saveAsset(janeDoeToken, testAsset1)
+                ])
+                .then(savedAssets => {
+                    testAsset0 = savedAssets[0];
+                    testAsset1 = savedAssets[1];
+                });
+            })
+            // Test to see if GET all gets all previously saved assets
+            .then(() => {
+                return request
+                    .get('/assets')
+                    .set('Authorization', janeDoeToken);
+                })
+            .then(res => { 
+                const assets = res.body;
+                assert.deepEqual(assets, [testAsset0, testAsset1]);
+            });
     });
 
 });
