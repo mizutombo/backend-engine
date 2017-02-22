@@ -1,0 +1,42 @@
+[{
+    "asset_type": "House",
+    "model": "Cardboard Box",
+    "purchase_price": "0",
+    "current_value": "0",
+    "monthly_appreciation_percentage": "0"
+},
+{
+    "asset_type": "House",
+    "model": "Craftsman",
+    "purchase_price": "300000",
+    "current_value": "300000",
+    "monthly_appreciation_percentage": "0"
+},
+{
+    "asset_type": "House",
+    "model": "Mansion",
+    "purchase_price": "500000",
+    "current_value": "500000",
+    "monthly_appreciation_percentage": "0"
+},
+{
+    "asset_type": "Vehicle",
+    "model": "Bicycle",
+    "purchase_price": "200",
+    "current_value": "200",
+    "monthly_appreciation_percentage": "0"
+},
+{
+    "asset_type": "Vehicle",
+    "model": "Economy Sedan",
+    "purchase_price": "10000",
+    "current_value": "10000",
+    "monthly_appreciation_percentage": "0"
+},
+{
+    "asset_type": "Vehicle",
+    "model": "Luxury SUV",
+    "purchase_price": "50000",
+    "current_value": "50000",
+    "monthly_appreciation_percentage": "0"
+}]
