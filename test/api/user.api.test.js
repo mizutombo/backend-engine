@@ -5,6 +5,8 @@ const assert = chai.assert;
 
 const app = require('../../lib/app');
 const mongoose = require('mongoose');
+
+process.env.DB_URI = 'mongodb://localhost:27017/user-api-test';
 const connection = require('../../lib/connection');
 
 
@@ -82,6 +84,38 @@ describe('user', () => {
                     }
                 )
         );
+    });
+    
+    describe('user during play', () => {
 
+        let testAsset3 = {
+        asset_type: 'House',
+        model: 'Tiny Home',
+        purchase_price: 1000
+    };
+    
+        function saveAsset (asset) {
+        return request.post('/assets')
+            .send(asset)
+            .then(res => res.body);
+        }
+        
+
+        it('can add assets to user object instance', () => {
+            return saveAsset(testAsset3)
+                .then(savedAsset3 => {
+                testAsset3._id = savedAsset3._id;
+                return testAsset3;
+            })
+            .then((testAsset3) =>
+            request 
+                .post('/user/user/assets')
+                .send({ testAsset3 })
+                .then(res => {
+                    console.log('RESPONSE', res);
+                    assert.equal(res.assets.length, 1);
+                })
+            );
+        });
     });
 });
