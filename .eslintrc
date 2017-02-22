@@ -1,0 +1,29 @@
+{
+    "parserOptions": {
+		"ecmaVersion": 6,
+		"sourceType": "module",
+		"ecmaFeatures": {
+			"modules": true,
+			"impliedStrict": true
+		}
+	},
+    "env": {
+        "node": true,
+        "mocha": true,
+        "es6": true
+    },
+    "extends": "eslint:recommended",
+    "rules": {
+        "no-console": "off",
+        "no-mixed-spaces-and-tabs": "off",
+        "no-unused-vars": 1,
+        "quotes": [
+            "error",
+            "single"
+        ],
+        "semi": [
+            "error",
+            "always"
+        ]
+    }
+}
