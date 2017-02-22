@@ -93,6 +93,15 @@ describe('user', () => {
             password: 'abcd'
         };
 
+        let johnDoeToken = '';
+
+        let hannibal = {
+            username: 'hannibal',
+            password: 'lecter'
+        };
+
+        let hannibalToken = '';
+
         let testAsset3 = {
         asset_type: 'House',
         model: 'Tiny Home',
@@ -102,9 +111,10 @@ describe('user', () => {
 
         const request = chai.request(app);
 
-        function saveAsset (asset) {
+        function saveAsset (token, asset) {
         return request.post('/assets')
             .send(asset)
+            .set('Authorization', token)
             .then(res => res.body);
         }
         
@@ -112,9 +122,11 @@ describe('user', () => {
             return request
                 .post('/user/signup')
                 .send(johnDoe)
+                .then(res => johnDoeToken = res.body.token)
                 .then(() => {
                     return request
-                        .get(`/user/${johnDoe.username}`);     
+                        .get(`/user/${johnDoe.username}`)
+                        .set('Authorization', johnDoeToken);     
                 })
                 .then((res) => {
                     console.log(res.body);
@@ -124,7 +136,14 @@ describe('user', () => {
         });
 
         it('can add assets to user object instance', () => {
-            return saveAsset(testAsset3)
+            return request
+                .post ('/user/signup')
+                .send(hannibal)
+                .then(res => {
+                    hannibalToken = res.body.token;
+                    console.log('HANNIBAL TOKEN', hannibalToken);
+                    return saveAsset(hannibalToken, testAsset3);
+                })
                 .then(savedAsset3 => {
                 testAsset3._id = savedAsset3._id;
                 testAsset3.__v = savedAsset3.__v;
@@ -132,8 +151,9 @@ describe('user', () => {
             })
             .then((testAsset3) =>
             request 
-                .post('/user/user/assets')
-                .send({ _id: testAsset3._id })
+                .post('/user/hannibal/assets')
+                .send({ hannibalToken, _id: testAsset3._id })
+                .set('Authorization', hannibalToken)
                 .then(res => {
                     console.log('RESPONSE', res.body);
                     assert.equal(res.body.assets.length, 1);
