@@ -85,7 +85,7 @@ describe('user', () => {
                 )
         );
 
-        it('can delete user', () => {
+        it('user can delete own account', () => {
             let unhappyUser = {
                 username: 'unhappy',
                 password: 'abcd'
@@ -103,6 +103,61 @@ describe('user', () => {
                 .then(res => {
                     assert.isOk(res.body.message);
                 });  
+        });
+
+        it('user can update username', () => {
+            let changeUser = {
+                username: 'mrbigglesworth',
+                password: 'abcd'
+            };
+
+            return request
+                .post('/user/signup')
+                .send(changeUser)
+                .then(res => res.body.token)
+                .then((token) => {
+                    return request
+                        .patch('/user/me/changeAccountInfo')
+                        .send({username: 'hungrymonkey'})
+                        .set('Authorization', token);
+                })
+                .then(res => {
+                    console.log(res.body.username);
+                    assert.equal(res.body.username, 'hungrymonkey');
+                });
+        });
+
+        it.only('user can update username and password', () => {
+            let changeUser = {
+                username: 'mrbigglesworth',
+                password: 'abcd'
+            };
+            
+            let userHash = '';
+            
+            let newHash = '';
+
+            return request
+                .post('/user/signup')
+                .send(changeUser)
+                .then(res => res.body.token)
+                .then((token) => {
+                    return request
+                        .get('/user/mrbigglesworth')
+                        .set('Authorization', token)
+                        .then(res => {
+                            userHash = res.body.hash;
+                            return request
+                            .patch('/user/me/changeAccountInfo')
+                            .send({password: 'efgh'})
+                            .set('Authorization', token)
+                            .then(res => newHash = res.body.hash)
+                        });
+                })
+                .then(res => {
+                    console.log('NEWHASH', newHash, 'USERHASH', userHash);
+                    assert.notEqual(newHash, userHash);
+                });
         });
     });
     
