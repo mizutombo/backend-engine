@@ -14,7 +14,7 @@ describe('admin user', () =>{
     
     const request = chai.request(app);
 
-    describe.only('admin management', () => {
+    describe('admin management', () => {
         const badRequest = (url, data, error) =>
             request
                 .post(url)
