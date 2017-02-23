@@ -127,7 +127,7 @@ describe('user', () => {
                 });
         });
 
-        it.only('user can update username and password', () => {
+        it('user can update username and password', () => {
             let changeUser = {
                 username: 'mrbigglesworth',
                 password: 'abcd'
