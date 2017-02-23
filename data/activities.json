@@ -1,0 +1,37 @@
+[
+    {
+        "name": "Go out for a fancy dinner",
+        "purchasePrice": "100",
+        "rewardOdds": "20",
+        "rewardAmount": "5000",
+        "rewardMessage": "You ran into your boss and became besties. She gave you a bonus of $5000!"
+    },   
+    {
+        "name": "Perform with your band",
+        "purchasePrice": "0",
+        "rewardOdds": "10",
+        "rewardAmount": "50000",
+        "rewardMessage": "You were discovered!! You signed a record contract with a $50,000 signing bonus!"
+    },
+    {
+        "name": "Go to the beach",
+        "purchasePrice": "20",
+        "rewardOdds": "30",
+        "rewardAmount": "1000",
+        "rewardMessage": "You found a gold ring with your metal detector work $1000!"
+    },
+    {
+        "name": "Play the lottery",
+        "purchasePrice": "1",
+        "rewardOdds": "1",
+        "rewardAmount": "1000000000",
+        "rewardMessage": "You won the lottery!! Proceed to early retirement!!!"
+    },
+    {
+        "name": "Flipped a coin",
+        "purchasePrice": "1",
+        "rewardOdds": "50",
+        "rewardAmount": "1",
+        "rewardMessage": "You won the toss and got to keep the $1 coin!"
+    }
+]
