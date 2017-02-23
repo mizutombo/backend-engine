@@ -84,6 +84,26 @@ describe('user', () => {
                     }
                 )
         );
+
+        it('can delete user', () => {
+            let unhappyUser = {
+                username: 'unhappy',
+                password: 'abcd'
+            };
+
+            return request
+                .post('/user/signup')
+                .send(unhappyUser)
+                .then(res => res.body.token)
+                .then((token) => {
+                    return request
+                        .delete('/user/me')
+                        .set('Authorization', token);
+                })
+                .then(res => {
+                    assert.isOk(res.body.message);
+                });  
+        });
     });
     
     describe('user during play', () => {
@@ -100,15 +120,13 @@ describe('user', () => {
         model: 'Tiny Home',
         purchase_price: 1000
         };
-    
-
-        const request = chai.request(app);
 
         function saveAsset (token, asset) {
-        return request.post('/assets')
-            .send(asset)
-            .set('Authorization', token)
-            .then(res => res.body);
+            return request
+                .post('/assets')
+                .send(asset)
+                .set('Authorization', token)
+                .then(res => res.body);
         }
         
         it('receives properties to user object on signup', () => {
