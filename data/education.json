@@ -1,0 +1,14 @@
+[
+    {
+        "educationLevel": "High School",
+        "educationCost": "0"
+    },
+    {
+        "educationLevel": "Vocational",
+        "educationCost": "20000"
+    },
+    {
+        "educationLevel": "College",
+        "educationCost": "120000"
+    }
+]

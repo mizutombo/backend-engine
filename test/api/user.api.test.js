@@ -150,7 +150,7 @@ describe('user', () => {
                             .patch('/user/me/changeAccountInfo')
                             .send({password: 'efgh'})
                             .set('Authorization', token)
-                            .then(res => newHash = res.body.hash)
+                            .then(res => newHash = res.body.hash);
                         });
                 })
                 .then(res => {
