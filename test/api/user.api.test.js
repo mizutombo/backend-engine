@@ -9,7 +9,6 @@ const mongoose = require('mongoose');
 process.env.DB_URI = 'mongodb://localhost:27017/user-api-test';
 require('../../lib/connection');
 
-
 describe('user', () => {
     before(() => mongoose.connection.dropDatabase());
 
