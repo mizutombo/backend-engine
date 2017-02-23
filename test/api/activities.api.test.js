@@ -69,7 +69,7 @@ describe('activities REST API', () => {
         .then(res => {
             const activities = res.body;
             assert.deepEqual(activities, [testActivity1, testActivity2]);
-        })
+        });
     });
 
 

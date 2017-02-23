@@ -60,6 +60,6 @@ describe('activity model', () => {
 
     it('validation passes with all property values', () => {
         return new Activity(testActivity)
-            .validate()
+            .validate();
     });
 });
