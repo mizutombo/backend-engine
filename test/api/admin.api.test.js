@@ -9,7 +9,7 @@ const mongoose = require('mongoose');
 process.env.DB_URI = 'mongodb://localhost:27017/admin-api-test';
 require('../../lib/connection');
 
-describe.only('admin user', () =>{
+describe('admin user', () =>{
     before(() => mongoose.connection.dropDatabase());
     
     const request = chai.request(app);
