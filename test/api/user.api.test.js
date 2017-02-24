@@ -9,7 +9,96 @@ const mongoose = require('mongoose');
 process.env.DB_URI = 'mongodb://localhost:27017/user-api-test';
 require('../../lib/connection');
 
-describe('user', () => {
+const request = chai.request(app);
+
+describe.only('admin api tests : ', () => {
+    
+    before(() => mongoose.connection.dropDatabase());
+
+    const admin = {
+        username: 'admin',
+        password: 'password'
+    };
+
+    describe('admin capability tests : ', () => {
+
+        const badRequest = (url, data, error) => 
+        request
+            .post(url)
+            .send(data)
+            .then(
+                () => { throw new Error('status should not be ok'); },
+                res => {
+                    assert.equal(res.status, 400);
+                    assert.equal(res.response.body.error, error);
+                }
+            );
+
+        const zapAsset1 = {
+            asset_type: 'House',
+            model: 'Mansion',
+            purchase_price: 1600000
+        };
+
+        let zapAsset2 = {
+            asset_type: 'House',
+            model: 'Craftsman',
+            purchase_price: 400000
+        };
+
+        function saveAsset(asset) {
+            return request
+                .post('admin/assets')
+                .send(asset)
+                .then(res => res.body);
+        }
+
+        it('GET returns empty array of assets', () => {
+            return request.get('/admin/assets')
+                .then(req => req.body)
+                .then(assets => assert.deepEqual(assets, []));
+        });
+
+        it('admin adds an asset', () => {
+            return saveAsset(zapAsset1)
+                .then(savedAsset => {
+                    assert.isOk(savedAsset._id);
+                    zapAsset1._id = savedAsset._id;
+                    zapAsset1._v = 0;
+                    assert.deepEqual(savedAsset, zapAsset1);
+                });
+        });
+        
+        it('admin patch updates an asset', () => {
+            zapAsset1.purchase_price = 1300000;
+            const url = `/admin/assets/${zapAsset1._id}`;
+            return request
+                .put(url)
+                .send(zapAsset1)
+                .then(res => {
+                    assert.deepEqual(res.body, zapAsset1);
+                    return request
+                        .get(url);
+                })
+                .then(res => {
+                    assert.deepEqual(res.body, zapAsset1);
+                });
+        });
+        
+        it('admin deletes an asset', () => {
+            return request 
+               .del(`/admin/assets/${zapAsset1._id}`)
+               .then(res => {
+                   assert.isTrue(res.body.deleted);
+               });
+        });
+
+    });
+
+});
+
+describe('user api tests : ', () => {
+    
     before(() => mongoose.connection.dropDatabase());
 
     const user = {
@@ -17,9 +106,9 @@ describe('user', () => {
         password: 'password'
     };
 
-    const request = chai.request(app);
+    // const request = chai.request(app);
 
-    describe('user management', () => {
+    describe('user management tests : ', () => {
 
         const badRequest = (url, data, error) => 
             request
