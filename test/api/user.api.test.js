@@ -17,7 +17,7 @@ describe.only('admin api tests : ', () => {
 
     const admin = {
         username: 'admin',
-        password: 'password'
+        password: 'supersekritadminpassword'
     };
 
     describe('admin capability tests : ', () => {
@@ -48,46 +48,38 @@ describe.only('admin api tests : ', () => {
 
         function saveAsset(asset) {
             return request
-                .post('admin/assets')
+                .post('/user/admin/assets')
                 .send(asset)
                 .then(res => res.body);
         }
-
-        it('GET returns empty array of assets', () => {
-            return request.get('/admin/assets')
-                .then(req => req.body)
-                .then(assets => assert.deepEqual(assets, []));
-        });
-
-        it('admin adds an asset', () => {
-            return saveAsset(zapAsset1)
-                .then(savedAsset => {
-                    assert.isOk(savedAsset._id);
-                    zapAsset1._id = savedAsset._id;
-                    zapAsset1._v = 0;
-                    assert.deepEqual(savedAsset, zapAsset1);
-                });
-        });
         
         it('admin patch updates an asset', () => {
-            zapAsset1.purchase_price = 1300000;
-            const url = `/admin/assets/${zapAsset1._id}`;
+            const url = '/user/admin/assets';
             return request
-                .put(url)
-                .send(zapAsset1)
-                .then(res => {
-                    assert.deepEqual(res.body, zapAsset1);
+                .post('/user/admin/signup')
+                .send(admin)
+                .then(res => res.body.token)
+                .then(token => {
+                    console.log(token);
+                    zapAsset1.purchase_price = 1300000;
                     return request
-                        .get(url);
-                })
-                .then(res => {
-                    assert.deepEqual(res.body, zapAsset1);
-                });
+                        .patch(url)
+                        .send(zapAsset1)
+                        .set('Authorization', token);
+                })        
+                        .then(res => {
+                            assert.deepEqual(res.body, zapAsset1);
+                            return request
+                                .get(url);
+                        })
+                        .then(res => {
+                            assert.deepEqual(res.body, zapAsset1);
+                        });
         });
         
         it('admin deletes an asset', () => {
             return request 
-               .del(`/admin/assets/${zapAsset1._id}`)
+               .del(`/user/admin/assets/${zapAsset1._id}`)
                .then(res => {
                    assert.isTrue(res.body.deleted);
                });
