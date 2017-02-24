@@ -35,7 +35,7 @@ describe('activities REST API', () => {
         name: 'Play the lottery',
         purchasePrice: 1,
         rewardOdds: 2,
-        rewardAmount: 600000,
+        rewardAmount: 60000,
         rewardMessage: 'You won $60,000!'
     };
 
