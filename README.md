@@ -1,7 +1,7 @@
 # dbSimsPDX
 A backend game of life. 
 
-The goal of the game is to retireas young as possible with a networth of $1,000,000! 
+The goal of the game is to retire as young as possible with a networth of $1,000,000! 
 As a player, you start the game as an 18 year old high school graduate with an entry level, unskilled job. 
 With the random amount of money in your bank account, you can choose how to spend your money whether it be on education, assets, or activities.
 Spending money on education, means you lose that amount from your networth, but you advance your career to a higher paying job with more earning potential.
