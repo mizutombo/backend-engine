@@ -9,12 +9,12 @@ const mongoose = require('mongoose');
 process.env.DB_URI = 'mongodb://localhost:27017/admin-api-test';
 require('../../lib/connection');
 
-describe('admin user', () =>{
+describe.only('admin user', () =>{
     before(() => mongoose.connection.dropDatabase());
     
     const request = chai.request(app);
 
-    describe.only('admin management', () => {
+    describe('admin management', () => {
 
         const admin = {
         username: 'admin',
@@ -80,6 +80,36 @@ describe('admin user', () =>{
                     }
                 )
         );
+
+        it('can create new assets', () => {
+            let newAdmin = {
+                username: 'newAdmin',
+                password: 'supersekritadminpassword'
+            };
+
+            let newAsset = {
+                asset_type: 'Vehicle',
+                model: 'Tricycle',
+                purchase_price: 100,
+                current_value: 100,
+                monthly_appreciation_percentage: 0
+            };
+
+            return request
+                .post('/user/signup/admin')
+                .send(newAdmin)
+                .then(res => res.body.token)
+                .then((token) => {
+                    console.log(token);
+                    return request
+                    .post('/user/admin/assets')
+                    .send(newAsset)
+                    .set('Authorization', token);
+                })
+                .then(res => {
+                    assert.equal(res.status, 200);
+                });
+        });
     });
 });
 
