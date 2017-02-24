@@ -14,7 +14,15 @@ describe('admin user', () =>{
     
     const request = chai.request(app);
 
-    describe('admin management', () => {
+    describe.only('admin management', () => {
+
+        const admin = {
+        username: 'admin',
+        password: 'supersekritadminpassword'
+        };
+    
+        let token = '';
+    
         const badRequest = (url, data, error) =>
             request
                 .post(url)
@@ -22,7 +30,21 @@ describe('admin user', () =>{
                 .then(
                     () => { throw new Error('status should not be ok'); },
                     res => {
+                        console.log(res.status);
                         assert.equal(res.status, 400);
+                        assert.equal(res.response.body.error, error);
+                    }
+                );
+
+        const badAdminRequest = (url, data, error) =>
+            request
+                .post(url)
+                .send(data)
+                .then(
+                    () => { throw new Error('status should not be ok'); },
+                    res => {
+                        console.log(res.status);
+                        assert.equal(res.status, 401);
                         assert.equal(res.response.body.error, error);
                     }
                 );
@@ -32,11 +54,31 @@ describe('admin user', () =>{
         );
 
         it('admin signup requires password', () =>
-            badRequest('user/signup/admin', {username: 'horatio'}, 'username and password must be provided')
+            badRequest('/user/signup/admin', {username: 'horatio'}, 'username and password must be provided')
         );
 
         it('admin signup requires username and special admin password', () =>
-            badRequest('user/signup/admin', {username: 'horatio', password: 'supersekritadminpassword'}, 'Unauthorized to Create Admin Account')
+            badAdminRequest('/user/signup/admin', {username: 'horatio', password: 'notsupersekritadminpassword'}, 'Unauthorized to Create Admin Account')
+        );
+
+        it('admin signup', () => 
+            request
+                .post('/user/signup/admin')
+                .send(admin)
+                .then(res => assert.ok(token = res.body.token))
+        );
+
+        it('can\'t use same user name', () => 
+            request
+                .post('/user/signup/admin')
+                .send(admin)
+                .then(
+                    () => { throw new Error('status should not be ok'); },
+                    res => {
+                        assert.equal(res.status, 400);
+                        assert.equal(res.response.body.error, 'username admin already exists');
+                    }
+                )
         );
     });
 });
